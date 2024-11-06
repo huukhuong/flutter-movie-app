@@ -4,8 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone/core/configs/themes/app_theme.dart';
 import 'package:netflix_clone/presentation/splash/bloc/splash_cubit.dart';
 import 'package:netflix_clone/presentation/splash/screens/splash_screen.dart';
+import 'package:netflix_clone/service_locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupServiceLocator();
   runApp(const MainApp());
 }
 

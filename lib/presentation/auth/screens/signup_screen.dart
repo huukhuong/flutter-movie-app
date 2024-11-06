@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/common/helpers/message/display_message.dart';
 import 'package:netflix_clone/common/helpers/navigation/app_navigation.dart';
 import 'package:netflix_clone/core/configs/themes/app_colors.dart';
+import 'package:netflix_clone/data/auth/models/signup_req.dart';
+import 'package:netflix_clone/domain/auth/usecases/signup.dart';
 import 'package:netflix_clone/presentation/auth/screens/login_screen.dart';
+import 'package:netflix_clone/presentation/home/screens/home_screen.dart';
+import 'package:netflix_clone/service_locator.dart';
 import 'package:reactive_button/reactive_button.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  SignupScreen({super.key});
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,7 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(height: 20),
               _passwordInput(),
               const SizedBox(height: 20),
-              _signupButton(),
+              _signupButton(context),
               const SizedBox(height: 10),
               signupText(context),
             ],
@@ -49,24 +57,35 @@ class SignupScreen extends StatelessWidget {
   }
 
   Widget _emailInput() {
-    return const TextField(
-      decoration: InputDecoration(hintText: 'Email'),
+    return TextField(
+      controller: _email,
+      decoration: const InputDecoration(hintText: 'Email'),
     );
   }
 
   Widget _passwordInput() {
-    return const TextField(
-      decoration: InputDecoration(hintText: 'Password'),
+    return TextField(
+      controller: _password,
+      decoration: const InputDecoration(hintText: 'Password'),
     );
   }
 
-  Widget _signupButton() {
+  Widget _signupButton(BuildContext context) {
     return ReactiveButton(
       title: 'Signup',
       activeColor: AppColors.primary,
-      onPressed: () async => {},
-      onSuccess: () {},
-      onFailure: (e) {},
+      onPressed: () async => await sl<SignupUsecase>().call(
+        params: SignupRequest(
+          email: _email.text,
+          password: _password.text,
+        ),
+      ),
+      onSuccess: () {
+        AppNavigation.pushAndRemove(context, const HomeScreen());
+      },
+      onFailure: (e) {
+        DisplayMessage.errorMessage(context, e);
+      },
     );
   }
 
@@ -78,7 +97,7 @@ class SignupScreen extends StatelessWidget {
         const Text('Already have an account?'),
         TextButton(
           onPressed: () {
-            AppNavigation.push(context, const LoginScreen());
+            AppNavigation.push(context, LoginScreen());
           },
           style: TextButton.styleFrom(
             padding: const EdgeInsets.only(left: 3, right: 3),

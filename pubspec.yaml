@@ -16,6 +16,9 @@ dependencies:
   reactive_button:
   dio:
   dartz:
+  logger:
+  get_it:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
