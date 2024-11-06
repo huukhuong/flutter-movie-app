@@ -12,12 +12,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  google_fonts: ^6.2.1
-  lottie: ^3.1.2
-  http: ^1.2.0
-  carousel_slider: ^4.2.1
-  cached_network_image: ^3.3.1
-  flutter_native_splash: ^2.4.0
+  flutter_bloc:
+  reactive_button:
+  dio:
+  dartz:
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +27,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/images/
 
   # fonts:
   #   - family: Schyler
@@ -42,5 +40,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-flutter_native_splash:
-  color: "#000000"

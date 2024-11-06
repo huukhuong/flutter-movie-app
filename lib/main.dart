@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:netflix_clone/common/utils.dart';
-import 'package:netflix_clone/screens/splash_screen.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/core/configs/themes/app_theme.dart';
+import 'package:netflix_clone/presentation/splash/bloc/splash_cubit.dart';
+import 'package:netflix_clone/presentation/splash/screens/splash_screen.dart';
 
 void main() {
-  FlutterNativeSplash.remove();
   runApp(const MainApp());
 }
 
@@ -14,24 +14,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Netflix",
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white, fontSize: 24),
-          bodyMedium: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ).copyWith(
-          background: kBackgroundColor,
-        ),
-        fontFamily: GoogleFonts.roboto().fontFamily,
-        useMaterial3: true,
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
+
+    return BlocProvider(
+      create: (context) => SplashCubit()..appStarted(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.appTheme,
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }
