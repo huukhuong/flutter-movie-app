@@ -19,6 +19,8 @@ dependencies:
   logger:
   get_it:
   shared_preferences:
+  flutter_svg:
+  fan_carousel_image_slider:
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +33,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/vectors/
 
   # fonts:
   #   - family: Schyler

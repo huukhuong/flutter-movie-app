@@ -6,12 +6,12 @@ import 'package:netflix_clone/data/auth/models/login_req.dart';
 import 'package:netflix_clone/data/auth/models/signup_req.dart';
 import 'package:netflix_clone/service_locator.dart';
 
-abstract class AuthApiService {
+abstract class AuthService {
   Future<Either> login(LoginRequest req);
   Future<Either> signup(SignupRequest req);
 }
 
-class AuthApiServiceImpl extends AuthApiService {
+class AuthServiceImpl extends AuthService {
   @override
   Future<Either> login(LoginRequest req) async {
     try {

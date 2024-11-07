@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoggerInterceptor extends Interceptor {
   Logger logger = Logger(
@@ -10,7 +11,7 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final options = err.requestOptions;
-    final requestPath = '${options.baseUrl}${options.path}';
+    final requestPath = options.path;
     logger.e(
       '[${options.method}] $requestPath\n'
       'Error type: ${err.error}\n'
@@ -22,7 +23,7 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final requestPath = '${options.baseUrl}${options.path}';
+    final requestPath = options.path;
     logger.i(
       '[${options.method}] $requestPath\n'
       'Body: ${jsonEncode(options.data)}',
@@ -38,5 +39,18 @@ class LoggerInterceptor extends Interceptor {
       'Data: ${jsonEncode(response.data)}',
     );
     handler.next(response);
+  }
+}
+
+class AuthorizationInterceptor extends Interceptor {
+  @override
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final token = sharedPreferences.getString('token');
+    if (token != null) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
+    handler.next(options);
   }
 }
