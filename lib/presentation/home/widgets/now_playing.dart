@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/common/helpers/navigation/app_navigation.dart';
 import 'package:netflix_clone/core/configs/assets/app_images.dart';
+import 'package:netflix_clone/presentation/detail/screens/movie_detail_screen.dart';
 import 'package:netflix_clone/presentation/home/bloc/now_playing_cubit.dart';
 
 class NowPlaying extends StatelessWidget {
@@ -44,35 +46,43 @@ class NowPlaying extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var movie = state.movies[index];
 
-                      return SizedBox(
-                        width: 120,
-                        child: Column(
-                          children: [
-                            Image.network(
-                              '${AppImages.movieImageBasePath}/${movie.posterPath}',
-                              height: 180,
-                              width: 120,
-                            ),
-                            Text(
-                              movie.originalTitle ?? '',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 16,
-                                ),
-                                Text(
-                                  '${(movie.voteAverage ?? 0).roundToDouble()}',
-                                )
-                              ],
-                            )
-                          ],
+                      return GestureDetector(
+                        onTap: () {
+                          AppNavigation.push(
+                            context,
+                            MovieDetailScreen(movie: movie),
+                          );
+                        },
+                        child: SizedBox(
+                          width: 120,
+                          child: Column(
+                            children: [
+                              Image.network(
+                                '${AppImages.movieImageBasePath}/${movie.posterPath}',
+                                height: 180,
+                                width: 120,
+                              ),
+                              Text(
+                                movie.originalTitle ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    '${(movie.voteAverage ?? 0).roundToDouble()}',
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

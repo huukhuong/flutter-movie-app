@@ -1,4 +1,5 @@
 import 'package:netflix_clone/data/movie/models/movie.dart';
+import 'package:netflix_clone/data/movie/models/movie_recommendation.dart';
 
 class MovieEntity {
   MovieEntity({
@@ -46,6 +47,25 @@ class MovieEntity {
       posterPath: model.posterPath,
       backdropPath: model.backdropPath,
       voteAverage: model.voteAverage,
+      voteCount: model.voteCount,
+      adult: model.adult,
+      genreIds: model.genreIds,
+      originalLanguage: model.originalLanguage,
+      originalTitle: model.originalTitle,
+      popularity: model.popularity,
+      video: model.video,
+    );
+  }
+
+  static MovieEntity fromRecommendationModel(MovieRecommendationModel model) {
+    return MovieEntity(
+      id: model.id,
+      title: model.title,
+      overview: model.overview,
+      releaseDate: model.releaseDate,
+      posterPath: model.posterPath,
+      backdropPath: model.backdropPath,
+      voteAverage: double.tryParse(model.voteAverage.toString()),
       voteCount: model.voteCount,
       adult: model.adult,
       genreIds: model.genreIds,
