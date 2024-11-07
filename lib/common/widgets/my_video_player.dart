@@ -12,6 +12,7 @@ class MyVideoPlayer extends StatefulWidget {
 
 class _MyVideoPlayerState extends State<MyVideoPlayer> {
   late YoutubePlayerController _controller;
+  bool canShow = false;
 
   @override
   void initState() {
@@ -23,14 +24,26 @@ class _MyVideoPlayerState extends State<MyVideoPlayer> {
         mute: false,
       ),
     );
+
+    Future.delayed(const Duration(seconds: 1)).then(
+      (v) => {
+        setState(() {
+          canShow = true;
+        })
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: true,
-    );
+    return canShow
+        ? YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
   }
 
   @override

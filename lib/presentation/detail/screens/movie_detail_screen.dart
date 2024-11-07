@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone/common/widgets/app_bar.dart';
 import 'package:netflix_clone/common/widgets/my_video_player.dart';
